@@ -1,0 +1,46 @@
+<div class="container p-3 bg-light">
+  <h1 class="text-center">
+    Display the external Api data and filtering the data without using pipe &
+    Pagination
+  </h1>
+  <div class="col-sm-6 col-md-6 p-3">
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        aria-label="Text input with dropdown button"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="SearchFeature()"
+        placeholder="Search by Name..."
+      />
+    </div>
+  </div>
+
+  <table class="table table-striped table-warning table-bordered">
+    <thead>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Body</th>
+    </thead>
+
+    <tbody *ngIf="filterData.length > 0">
+      <tr
+        *ngFor="let obj of filterData | paginate: config"
+        class="text-center bg-muted table-bordered"
+      >
+        <td>{{ obj.id }}</td>
+        <td>{{ obj.name }}</td>
+        <td>{{ obj.email }}</td>
+        <td>{{ obj.body }}</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="filterData.length === 0">
+      <p>No Records found ...!</p>
+    </tbody>
+
+    <pagination-controls
+      (pageChange)="pageChanged($event)"
+    ></pagination-controls>
+  </table>
+</div>
